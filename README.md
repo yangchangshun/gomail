@@ -34,7 +34,7 @@ https://godoc.org/gopkg.in/gomail.v2
 
 ## Download
 
-    go get gopkg.in/gomail.v2
+    go get github.com/yangchangshun/gomail
 
 
 ## Examples

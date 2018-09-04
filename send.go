@@ -61,6 +61,29 @@ func send(s Sender, m *Message) error {
 	return nil
 }
 
+// SendWithFrom sends emails using the given From and Sender
+func SendWithFrom(from string, s Sender, msg ...*Message) error {
+	for i, m := range msg {
+		if err := sendWithFrom(from, s, m); err != nil {
+			return fmt.Errorf("gomail: could not send email %d with %v: %v", i+1, from, err)
+		}
+	}
+	return nil
+}
+
+func sendWithFrom(from string, s Sender, m *Message) error {
+	to, err := m.getRecipients()
+	if err != nil {
+		return err
+	}
+
+	if err := s.Send(from, to, m); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func (m *Message) getFrom() (string, error) {
 	from := m.header["Sender"]
 	if len(from) == 0 {
